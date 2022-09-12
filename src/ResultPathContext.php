@@ -15,6 +15,7 @@ class ResultPathContext
         $this->direct = $this->getDirection($points[0], $points[1]);
         $this->reverse = $this->getDirection($points[0], $points[count($points)-1]);
     }
+
     public function hash(): string
     {
         return "{$this->path->toArray()[0]->hash()}-{$this->direct->hash()}-{$this->reverse->hash()}";

@@ -55,11 +55,16 @@ class BreakPieces
      */
     protected function getPaths(Matrix $matrix): array
     {
+        if(($firstPos = $matrix->getFirstPosition()) === null) {
+            return [];
+        }
+        $nextMatrix = clone $matrix;
+
         /** @var VectorCollection[] $paths */
         $paths = [];
         $contexts = [
             new TraverseContext(
-                $matrix->getFirstPosition(),
+                $firstPos,
                 new Direction(-1, 0),
                 new VectorCollection(),
                 new VectorCollection()
@@ -68,6 +73,7 @@ class BreakPieces
 
         while(count($contexts)) {
             $context = array_pop($contexts);
+            $nextMatrix->setValue($context->position, ' ');
 
             if($matrix->getValue($context->position) === '+') {
                 if($context->passed->isset($context->position)) {
@@ -96,6 +102,6 @@ class BreakPieces
             }
         }
 
-        return $paths;
+        return [...$paths, ...$this->getPaths($nextMatrix)];
     }
 }

@@ -87,14 +87,6 @@ class VectorCollection
         return [new Vector($minX, $minY), new Vector($maxX, $maxY)];
     }
 
-    public function includes(VectorCollection $collection): bool
-    {
-        return !count(array_diff(
-            array_keys($collection->map),
-            array_keys($this->map)
-        ));
-    }
-
     public function getArea(): float
     {
         $points = $this->toArray();

@@ -76,7 +76,7 @@ class Matrix
         $this->storage[$y][$x] = $value;
     }
 
-    public function getFirstPosition(): Vector
+    public function getFirstPosition(): ?Vector
     {
         foreach($this->storage as $y => $row) {
             foreach($row as $x => $value) {
@@ -86,7 +86,7 @@ class Matrix
             }
         }
 
-        return new Vector(0, 0);
+        return null;
     }
 
     /**
