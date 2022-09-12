@@ -4,10 +4,58 @@ namespace Smoren\Testing;
 
 class BreakPieces
 {
-    public function process($shape): array
+    public function process(string $shape): array
     {
         $matrix = new Matrix($shape);
-        $points = new VectorCollection();
+        $paths = $this->getPaths($matrix);
+
+        $shapes = array_unique(array_map(function($path) {
+            return Matrix::fromCollection($path)->stringify();
+        }, $paths));
+
+        $matrices = array_map(function($shape) {
+            return new Matrix($shape);
+        }, $shapes);
+
+        $contexts = array_map(function($matrix) {
+            return new ResultPathContext($this->getPaths($matrix)[0]);
+        }, $matrices);
+
+        $contextMap = [];
+        foreach($contexts as $context) {
+            $hash = $context->hash();
+            if(!isset($contextMap[$hash])) {
+                $contextMap[$hash] = [];
+            }
+            $contextMap[$hash][] = $context;
+        }
+
+        foreach($contextMap as &$contexts) {
+            usort($contexts, function(ResultPathContext $lhs, ResultPathContext $rhs) {
+                return $lhs->path->getPerimeter() - $rhs->path->getPerimeter();
+            });
+        }
+
+        $paths = array_map(function($contexts) {
+            return $contexts[0]->path;
+        }, $contextMap);
+
+        $result = [];
+        foreach($paths as $path) {
+            $result[] = Matrix::fromCollection($path->getNormalized())->stringify();
+            //$result[] = Matrix::fromCollection($path)->stringify();
+        }
+        $result = array_unique($result);
+
+        return $result;
+    }
+
+    /**
+     * @param Matrix $matrix
+     * @return array<VectorCollection>
+     */
+    protected function getPaths(Matrix $matrix): array
+    {
         /** @var VectorCollection[] $paths */
         $paths = [];
         $contexts = [
@@ -29,7 +77,6 @@ class BreakPieces
                     }
                     continue;
                 }
-                $points->add($context->position);
 
                 $possibleDirections = $matrix->getPossibleDirections($context->position, $context->direction);
                 foreach($possibleDirections as $direction) {
@@ -50,23 +97,6 @@ class BreakPieces
             }
         }
 
-        $resultPaths = [];
-        foreach($paths as $lhs) {
-            foreach($paths as $rhs) {
-                if($lhs !== $rhs && Matrix::fromCollection($lhs)->includes(Matrix::fromCollection($rhs))) {
-                    continue 2;
-                }
-            }
-            $resultPaths[] = $lhs;
-        }
-
-        $result = [];
-        foreach($resultPaths as $path) {
-            //$result[] = Matrix::fromCollection($path->getNormalized())->stringify();
-            $result[] = Matrix::fromCollection($path)->stringify();
-        }
-        $result = array_unique($result);
-
-        return $result;
+        return $paths;
     }
 }

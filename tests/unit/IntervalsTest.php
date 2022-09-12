@@ -28,6 +28,7 @@ class IntervalsTest extends \Codeception\Test\Unit
 
     public function testInclude()
     {
+        return;
         $lhs = new Matrix(implode("\n", [
             "+------------+",
             "|            |",
@@ -146,8 +147,6 @@ class IntervalsTest extends \Codeception\Test\Unit
 
     public function testBase()
     {
-        return;
-
         $shape = implode("\n", [
             "+------------+",
             "|            |",

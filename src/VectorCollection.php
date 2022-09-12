@@ -95,6 +95,20 @@ class VectorCollection
         ));
     }
 
+    public function getPerimeter(): int
+    {
+        $points = $this->toArray();
+        if(count($points)) {
+            $points[] = $points[0];
+        }
+        return array_sum(array_map(function($point) {
+            return $point->len();
+        }, $points));
+    }
+
+    /**
+     * @return array<Vector>
+     */
     public function toArray(): array
     {
         return array_values($this->map);

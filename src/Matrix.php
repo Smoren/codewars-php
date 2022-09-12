@@ -64,7 +64,7 @@ class Matrix
     public function getValue(Vector $coords)
     {
         [$x, $y] = [$coords->x, $coords->y];
-        if(!isset($this->storage[$y][$x]) || $this->storage[$y][$x] === ' ') {
+        if(!isset($this->storage[$y][$x]) || !$this->storage[$y][$x] || $this->storage[$y][$x] === ' ') {
             return false;
         }
         return $this->storage[$y][$x];
@@ -78,7 +78,16 @@ class Matrix
 
     public function getFirstPosition(): Vector
     {
-        return new Vector((int)array_search('+', $this->storage[0] ?? []), 0);
+        foreach($this->storage as $y => $row) {
+            foreach($row as $x => $value) {
+                if($value === '+') {
+                    return new Vector($x, $y);
+                }
+            }
+        }
+
+        return new Vector(0, 0);
+        //return new Vector((int)array_search('+', $this->storage[0] ?? []), 0);
     }
 
     /**
