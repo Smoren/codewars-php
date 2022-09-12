@@ -13,9 +13,13 @@ class IntervalsTest extends \Codeception\Test\Unit
     public function testProblem()
     {
         $shape = implode("\n", [
-            "+---+---+---+---+---+---+---+---+",
-            "|   |   |   |   |   |   |   |   |",
-            "+---+---+---+---+---+---+---+---+",
+            "+-------------------+--+",
+            "|                   |  |",
+            "|                   |  |",
+            "|  +----------------+  |",
+            "|  |                   |",
+            "|  |                   |",
+            "+--+-------------------+",
         ]);
         $actual = (new BreakPieces())->process($shape);
         $a = 1;
@@ -23,6 +27,7 @@ class IntervalsTest extends \Codeception\Test\Unit
 
     public function testBase()
     {
+        return;
         $shape = implode("\n", [
             "+------------+",
             "|            |",

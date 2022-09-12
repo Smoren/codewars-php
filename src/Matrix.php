@@ -87,7 +87,6 @@ class Matrix
         }
 
         return new Vector(0, 0);
-        //return new Vector((int)array_search('+', $this->storage[0] ?? []), 0);
     }
 
     /**
@@ -109,33 +108,6 @@ class Matrix
 
         return $result;
     }
-
-    public function includes(Matrix $matrix): bool
-    {
-        $maxY = max(count($this->storage), count($matrix->storage));
-        $maxX = max(count($this->storage[0] ?? []), count($matrix->storage[0] ?? []));
-
-        for($y=0; $y<$maxY; ++$y) {
-            $intersectionCounter = 0;
-            for($x=0; $x<$maxX; ++$x) {
-                $coords = new Vector($x, $y);
-                $lhs = $this->getValue($coords);
-                $rhs = $matrix->getValue($coords);
-
-                if($lhs !== false) {
-                    // TODO ошибка
-                    if(in_array($lhs, ['|'])) {
-                        ++$intersectionCounter;
-                    }
-                } elseif($intersectionCounter % 2 === 0 && $rhs !== false) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
 
     public function stringify(): string
     {

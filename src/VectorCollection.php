@@ -101,9 +101,15 @@ class VectorCollection
         if(count($points)) {
             $points[] = $points[0];
         }
-        return array_sum(array_map(function($point) {
-            return $point->len();
-        }, $points));
+
+        $result = 0;
+        $i=0;
+        while(isset($points[$i]) && isset($points[$i+1])) {
+            $result += $points[$i+1]->sub($points[$i])->len();
+            ++$i;
+        }
+
+        return $result;
     }
 
     /**

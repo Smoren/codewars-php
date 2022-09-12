@@ -32,7 +32,21 @@ class BreakPieces
 
         foreach($contextMap as &$contexts) {
             usort($contexts, function(ResultPathContext $lhs, ResultPathContext $rhs) {
-                return $lhs->path->getPerimeter() - $rhs->path->getPerimeter();
+                $lp = $lhs->path->getPerimeter();
+                $rp = $rhs->path->getPerimeter();
+
+                if($lp === $rp) {
+                    return count($rhs->path->toArray()) - count($lhs->path->toArray());
+
+                    $l0 = $lhs->path->toArray()[0];
+                    $l1 = $lhs->path->toArray()[1];
+                    $r0 = $rhs->path->toArray()[0];
+                    $r1 = $rhs->path->toArray()[1];
+
+                    return (new Vector($l1->x-$l0->x, $l1->y-$l0->y))->len()
+                        - (new Vector($r1->x-$r0->x, $r1->y-$r0->y))->len();
+                }
+                return $lp-$rp;
             });
         }
 
@@ -41,6 +55,7 @@ class BreakPieces
         }, $contextMap);
 
         $result = [];
+        /** @var VectorCollection $path */
         foreach($paths as $path) {
             $result[] = Matrix::fromCollection($path->getNormalized())->stringify();
         }

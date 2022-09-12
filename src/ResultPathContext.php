@@ -20,6 +20,11 @@ class ResultPathContext
         return "{$this->path->toArray()[0]->hash()}-{$this->direct->hash()}-{$this->reverse->hash()}";
     }
 
+    protected function getArea(): int
+    {
+        // TODO
+    }
+
     protected function getDirection(Vector $lhs, Vector $rhs): Direction
     {
         $dx = $this->getSign($rhs->x - $lhs->x);

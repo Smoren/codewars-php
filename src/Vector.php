@@ -32,6 +32,11 @@ class Vector {
         return new Vector($this->x+$v->x, $this->y+$v->y);
     }
 
+    public function sub(Vector $v): Vector
+    {
+        return new Vector($v->x-$this->x, $v->y-$this->y);
+    }
+
     public function hash(): string
     {
         return "{$this->x}-{$this->y}";
