@@ -1,0 +1,41 @@
+{
+  "name": "smoren/testing",
+  "description": "Testing",
+  "keywords": [],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Smoren",
+      "email": "ofigate@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "codeception/codeception": "^4.2.1",
+    "codeception/module-asserts": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Smoren\\Testing\\": "src",
+      "Smoren\\Testing\\Tests\\Unit\\": "tests/unit"
+    }
+  },
+  "config": {
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
+  "scripts": {
+    "test-init": ["./vendor/bin/codecept build"],
+    "test": ["./vendor/bin/codecept run unit tests/unit"]
+  }
+}
