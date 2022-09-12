@@ -8,27 +8,37 @@ class IntervalsTest extends \Codeception\Test\Unit
 {
     public function testProblem()
     {
-        $shape = implode("\n", ["+------------+",
+        $shape = implode("\n", [
+            "+------------+",
             "|            |",
             "|            |",
             "|            |",
             "+------+-----+",
             "|      |     |",
             "|      |     |",
-            "+------+-----+"]);
-        $expected = [implode("\n", ["+------------+",
-            "|            |",
-            "|            |",
-            "|            |",
-            "+------------+"]),
-            implode("\n", ["+------+",
+            "+------+-----+"
+        ]);
+        $expected = [
+            implode("\n", [
+                "+------------+",
+                "|            |",
+                "|            |",
+                "|            |",
+                "+------------+"
+            ]),
+            implode("\n", [
+                "+------+",
                 "|      |",
                 "|      |",
-                "+------+"]),
-            implode("\n", ["+-----+",
+                "+------+"
+            ]),
+            implode("\n", [
+                "+-----+",
                 "|     |",
                 "|     |",
-                "+-----+"])];
+                "+-----+"
+            ]),
+        ];
         $actual = (new BreakPieces())->process($shape);
         sort($actual);
         sort($expected);
