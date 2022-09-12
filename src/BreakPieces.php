@@ -43,9 +43,7 @@ class BreakPieces
         $result = [];
         foreach($paths as $path) {
             $result[] = Matrix::fromCollection($path->getNormalized())->stringify();
-            //$result[] = Matrix::fromCollection($path)->stringify();
         }
-        $result = array_unique($result);
 
         return $result;
     }
