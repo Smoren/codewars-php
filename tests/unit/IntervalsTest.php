@@ -27,7 +27,6 @@ class IntervalsTest extends \Codeception\Test\Unit
 
     public function testBase()
     {
-        return;
         $shape = implode("\n", [
             "+------------+",
             "|            |",

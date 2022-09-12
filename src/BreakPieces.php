@@ -32,21 +32,7 @@ class BreakPieces
 
         foreach($contextMap as &$contexts) {
             usort($contexts, function(ResultPathContext $lhs, ResultPathContext $rhs) {
-                $lp = $lhs->path->getPerimeter();
-                $rp = $rhs->path->getPerimeter();
-
-                if($lp === $rp) {
-                    return count($rhs->path->toArray()) - count($lhs->path->toArray());
-
-                    $l0 = $lhs->path->toArray()[0];
-                    $l1 = $lhs->path->toArray()[1];
-                    $r0 = $rhs->path->toArray()[0];
-                    $r1 = $rhs->path->toArray()[1];
-
-                    return (new Vector($l1->x-$l0->x, $l1->y-$l0->y))->len()
-                        - (new Vector($r1->x-$r0->x, $r1->y-$r0->y))->len();
-                }
-                return $lp-$rp;
+                return $lhs->path->getArea() - $rhs->path->getArea();
             });
         }
 

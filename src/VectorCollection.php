@@ -95,21 +95,20 @@ class VectorCollection
         ));
     }
 
-    public function getPerimeter(): int
+    public function getArea(): float
     {
         $points = $this->toArray();
         if(count($points)) {
             $points[] = $points[0];
         }
-
         $result = 0;
         $i=0;
         while(isset($points[$i]) && isset($points[$i+1])) {
-            $result += $points[$i+1]->sub($points[$i])->len();
+            [$lhs, $rhs] = [$points[$i], $points[$i+1]];
+            $result += $lhs->x*$rhs->y - $lhs->y*$rhs->x;
             ++$i;
         }
-
-        return $result;
+        return abs($result/2);
     }
 
     /**
